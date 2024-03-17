@@ -115,9 +115,9 @@ export function createCredentialOfferURI(
   return createCredentialOfferURIFromObject(credentialOffer, opts)
 }
 
-export const isPreAuthorizedCodeExpired = (state: CredentialOfferSession, expirationDuration: number) => {
+export const isPreAuthorizedCodeExpired = (state: CredentialOfferSession, expirationDurationInSeconds: number) => {
   const now = +new Date()
-  const expirationTime = state.createdAt + expirationDuration
+  const expirationTime = state.createdAt + expirationDurationInSeconds * 1000
   return now >= expirationTime
 }
 
