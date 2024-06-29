@@ -110,7 +110,7 @@ export const assertValidAccessTokenRequest = async (
   invalid_request:
   the Authorization Server does not expect a PIN in the pre-authorized flow but the client provides a PIN
    */
-  if (!credentialOfferSession.credentialOffer.credential_offer?.grants?.[GrantTypes.PRE_AUTHORIZED_CODE]?.user_pin_required && request.user_pin) {
+  if (!credentialOfferSession.credentialOffer.credential_offer?.grants?.[GrantTypes.PRE_AUTHORIZED_CODE]?.tx_code && request.user_pin) {
     throw new TokenError(400, TokenErrorResponse.invalid_request, USER_PIN_NOT_REQUIRED_ERROR)
   }
   /*

@@ -60,6 +60,11 @@ describe('OID4VCIServer', () => {
           grants: {
             'urn:ietf:params:oauth:grant-type:pre-authorized_code': {
               user_pin_required: true,
+              tx_code: {
+                length: 6,
+                input_mode: 'numeric',
+                description: 'Please enter the 6 digit code you received on your phone',
+              },
               'pre-authorized_code': preAuthorizedCode1,
             },
           },
@@ -79,7 +84,6 @@ describe('OID4VCIServer', () => {
             'urn:ietf:params:oauth:grant-type:pre-authorized_code': {
               ...credentialOfferState1.credentialOffer.credential_offer?.grants?.['urn:ietf:params:oauth:grant-type:pre-authorized_code'],
               'pre-authorized_code': preAuthorizedCode2,
-              user_pin_required: false,
             },
           },
         },
@@ -185,7 +189,7 @@ describe('OID4VCIServer', () => {
   it('should return http code 400 with message User pin is required', async () => {
     const res = await requests(app)
       .post('/token')
-      .send(`grant_type=urn:ietf:params:oauth:grant-type:pre-authorized_code&pre-authorized_code=${preAuthorizedCode1}`)
+      .send(`grant_type=urn:ietf:params:oauth:grant-type:pre-authorized_code&pre-authorized_code=${preAuthorizedCode1}&user_pin=12345678`)
     expect(res.statusCode).toEqual(400)
     const actual = JSON.parse(res.text)
     expect(actual).toEqual({
