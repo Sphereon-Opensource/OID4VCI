@@ -398,3 +398,7 @@ export type NotificationResult = {
 export interface NotificationErrorResponse {
   error: NotificationError | string;
 }
+
+export interface IssuerSessionIdRequestOpts {
+  sessionEndpoint: string;
+}

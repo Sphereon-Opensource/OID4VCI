@@ -24,6 +24,7 @@ import {
   getSupportedCredentials,
   getTypesFromCredentialSupported,
   getTypesFromObject,
+  IssuerSessionResponse,
   KID_JWK_X5C_ERROR,
   NotificationRequest,
   NotificationResult,
@@ -44,6 +45,7 @@ import { CredentialOfferClient } from './CredentialOfferClient';
 import { CredentialRequestOpts } from './CredentialRequestClient';
 import { CredentialRequestClientBuilderV1_0_11 } from './CredentialRequestClientBuilderV1_0_11';
 import { CredentialRequestClientBuilderV1_0_13 } from './CredentialRequestClientBuilderV1_0_13';
+import { acquireIssuerSessionId } from './IssuerSessionClient';
 import { MetadataClient } from './MetadataClient';
 import { OpenID4VCIClientStateV1_0_11 } from './OpenID4VCIClientV1_0_11';
 import { OpenID4VCIClientStateV1_0_13 } from './OpenID4VCIClientV1_0_13';
@@ -359,6 +361,16 @@ export class OpenID4VCIClient {
     }
 
     return this.accessTokenResponse;
+  }
+
+  public async acquireIssuerSessionId(): Promise<IssuerSessionResponse | undefined> {
+    if (!this._state.endpointMetadata) {
+      return Promise.reject('endpointMetadata no loaded, retrieveServerMetadata()');
+    }
+    if (!('session_endpoint' in this._state.endpointMetadata) || !this._state.endpointMetadata.session_endpoint) {
+      return undefined;
+    }
+    return acquireIssuerSessionId({ sessionEndpoint: this._state.endpointMetadata.session_endpoint });
   }
 
   public async acquireCredentials({

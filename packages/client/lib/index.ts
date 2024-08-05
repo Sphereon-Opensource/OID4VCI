@@ -22,4 +22,5 @@ export * from './MetadataClientV1_0_11';
 export * from './OpenID4VCIClient';
 export * from './OpenID4VCIClientV1_0_13';
 export * from './OpenID4VCIClientV1_0_11';
+export * from './IssuerSessionClient';
 export * from './ProofOfPossessionBuilder';

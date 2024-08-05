@@ -21,6 +21,10 @@ export interface CredentialResponse extends ExperimentalSubjectIssuance {
   notification_id?: string;
 }
 
+export interface IssuerSessionResponse {
+  session_id: string;
+}
+
 export interface CredentialOfferRequestWithBaseUrl extends UniformCredentialOfferRequest {
   scheme: string;
   clientId?: string;

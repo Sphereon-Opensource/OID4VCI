@@ -32,6 +32,7 @@ export interface IssuerMetadataV1_0_13 {
   notification_endpoint?: string;
   credential_response_encryption?: ResponseEncryption;
   token_endpoint?: string;
+  session_endpoint?: string;
   display?: MetadataDisplay[];
 
   [x: string]: unknown;
@@ -191,6 +192,7 @@ export interface EndpointMetadataResultV1_0_13 extends EndpointMetadata {
   authorizationServerType: AuthorizationServerType;
   authorizationServerMetadata?: AuthorizationServerMetadata;
   credentialIssuerMetadata?: Partial<AuthorizationServerMetadata> & IssuerMetadataV1_0_13;
+  session_endpoint?: string;
 }
 
 // For now we extend the opts above. Only difference is that the credential endpoint is optional in the Opts, as it can come from other sources. The value is however required in the eventual Issuer Metadata

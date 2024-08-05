@@ -50,6 +50,7 @@ export class MetadataClientV1_0_13 {
     let credential_endpoint: string | undefined;
     let deferred_credential_endpoint: string | undefined;
     let authorization_endpoint: string | undefined;
+    let session_endpoint: string | undefined;
     let authorizationServerType: AuthorizationServerType = 'OID4VCI';
     let authorization_servers: string[] = [issuer];
     const oid4vciResponse = await MetadataClientV1_0_13.retrieveOpenID4VCIServerMetadata(issuer, { errorOnNotFound: false }); // We will handle errors later, given we will also try other metadata locations
@@ -157,11 +158,16 @@ export class MetadataClientV1_0_13 {
       credentialIssuerMetadata = authMetadata as CredentialIssuerMetadataV1_0_13;
     }
     debug(`Issuer ${issuer} token endpoint ${token_endpoint}, credential endpoint ${credential_endpoint}`);
+
+    if (credentialIssuerMetadata?.session_endpoint !== undefined) {
+      session_endpoint = credentialIssuerMetadata.session_endpoint;
+    }
     return {
       issuer,
       token_endpoint,
       credential_endpoint,
       deferred_credential_endpoint,
+      session_endpoint,
       authorization_server: authorization_servers[0],
       authorization_endpoint,
       authorizationServerType,
